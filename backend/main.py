@@ -15,7 +15,7 @@ loan_amount: int
 @app.get("/")
 def welcome():
     return {
-        "message": "Welcome to the Loan Default Prediction API!"
+        "message": "Loan Default Prediction API is running"
     }
 
 @app.get("/health")

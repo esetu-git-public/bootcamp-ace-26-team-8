@@ -1,3 +1,7 @@
+# bootcamp-ace-26-team-8
+
+# Bootcamp by ACE Students Team 8
+
 # Loan Default Prediction
 
 ## Project Overview
@@ -74,7 +78,7 @@ The dataset contains borrower information such as demographic details, financial
 
 ## Project Architecture
 
-```
+```text
 User
    │
    ▼
@@ -89,63 +93,47 @@ Machine Learning Model
    ▼
 Prediction Result
 ```
+
 ---
 
 ## Installation
 
-Clone the repository:
-
 ```bash
 git clone <repository-url>
-```
-
-Navigate to the project folder:
-
-```bash
 cd bootcamp-ace-26-team-8
-```
-
-Create a virtual environment:
-
-```bash
 python -m venv venv
-```
-
-Activate the virtual environment.
-
-Install the required packages:
-
-```bash
 pip install -r requirements.txt
 ```
+
 ---
 
 ## How to Run
 
 1. Clone the repository.
-2. Install all required dependencies.
-3. Place the dataset inside the `data/raw/` folder.
-4. Open the preprocessing notebook and execute the cells.
+2. Install the dependencies.
+3. Place the dataset inside `data/raw/`.
+4. Run the preprocessing notebook.
 5. Start the FastAPI backend.
-6. Access the API through the browser or Swagger UI.
-7. Submit borrower details to receive the loan default prediction.
+6. Open Swagger UI.
+7. Test the prediction API.
 
 ---
 
 ## Future Scope
 
-- Improve prediction accuracy using advanced machine learning algorithms.
-- Deploy the application to a cloud platform.
-- Develop a responsive web interface.
-- Integrate Explainable AI (XAI) techniques.
-- Support real-time loan prediction.
-- Add authentication and user management.
+- Improve prediction accuracy.
+- Deploy to cloud.
+- Build a frontend.
+- Add Explainable AI.
+- Support real-time predictions.
+- Add authentication.
 
 ---
 
 ## Project Methodology
 
-This project follows the Agile Software Development Methodology. Development is carried out in multiple sprints, with continuous integration, code reviews, and incremental feature delivery through GitHub.
+This project follows the Agile Software Development Methodology with multiple sprints, continuous integration, and code reviews.
+
 ---
 
 ## Team Roles
