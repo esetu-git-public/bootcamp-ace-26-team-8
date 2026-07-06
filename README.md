@@ -1,14 +1,39 @@
+# bootcamp-ace-26-team-8
+
+# Bootcamp by ACE Students Team 8
+
 # Loan Default Prediction
 
 ## Project Overview
 
-This project aims to predict whether a borrower is likely to default on a loan using Machine Learning. The prediction helps financial institutions make informed loan approval decisions and reduce financial risk.
+Loan Default Prediction is a Machine Learning project developed to predict whether a borrower is likely to default on a loan. The system analyzes customer and loan-related information and classifies the borrower as either likely to default or not default. This project follows the Agile methodology with incremental development through multiple sprints.
 
 ---
 
 ## Problem Statement
 
-Loan defaults cause financial losses for banks and lending institutions. This project develops a machine learning model to predict whether a customer is likely to default on a loan based on customer and loan-related information, helping institutions make informed lending decisions.
+Financial institutions face significant losses due to loan defaults. Manually assessing loan applications can be time-consuming and inconsistent. This project aims to develop a machine learning model that predicts loan default risk using historical borrower data, enabling faster and more reliable lending decisions.
+
+---
+
+## Business Objectives
+
+- Reduce financial losses caused by loan defaults.
+- Improve the loan approval process.
+- Assist financial institutions in making data-driven decisions.
+- Increase the efficiency and consistency of risk assessment.
+- Build an accurate binary classification model for loan default prediction.
+
+---
+
+## Dataset
+
+- **Project:** Loan Default Prediction
+- **Problem Type:** Binary Classification
+- **Source:** Kaggle Loan Default Dataset
+- **Target Variable:** Loan Default (0 = No Default, 1 = Default)
+
+The dataset contains borrower information such as demographic details, financial information, loan details, and repayment history.
 
 ---
 
@@ -24,28 +49,30 @@ Loan defaults cause financial losses for banks and lending institutions. This pr
 
 ---
 
-## Features
+## Tech Stack
 
-- User Registration
-- User Login
-- Loan Application Submission
-- Loan Default Prediction using Machine Learning
-- Loan Approval/Rejection Workflow
-- Loan Status Tracking
-- Dashboard for Users
-
-
-## Technologies Used
-
+### Programming Language
 - Python
+
+### Machine Learning
+- Scikit-learn
 - Pandas
 - NumPy
-- Scikit-learn
-- Flask
-- HTML
-- CSS
-- JavaScript
-- Git & GitHub
+
+### Data Visualization
+- Matplotlib
+- Seaborn
+
+### Backend
+- FastAPI
+
+### Development Environment
+- Jupyter Notebook
+- Visual Studio Code
+
+### Version Control
+- Git
+- GitHub
 
 ---
 ## Installation
@@ -78,24 +105,65 @@ npm run dev
 
 
 
-## Project Structure
+## Project Architecture
 
 ```text
-bootcamp-ace-26-team-8/
-│
-├── backend/
-├── frontend/
-├── data/
-├── docs/
-├── models/
-├── notebooks/
-├── reports/
-├── src/
-├── tests/
-├── .gitignore
-├── requirements.txt
-└── README.md
+User
+   │
+   ▼
+Frontend
+   │
+   ▼
+FastAPI Backend
+   │
+   ▼
+Machine Learning Model
+   │
+   ▼
+Prediction Result
 ```
+
+---
+
+## Installation
+
+```bash
+git clone <repository-url>
+cd bootcamp-ace-26-team-8
+python -m venv venv
+pip install -r requirements.txt
+```
+
+---
+
+## How to Run
+
+1. Clone the repository.
+2. Install the dependencies.
+3. Place the dataset inside `data/raw/`.
+4. Run the preprocessing notebook.
+5. Start the FastAPI backend.
+6. Open Swagger UI.
+7. Test the prediction API.
+
+---
+
+## Future Scope
+
+- Improve prediction accuracy.
+- Deploy to cloud.
+- Build a frontend.
+- Add Explainable AI.
+- Support real-time predictions.
+- Add authentication.
+
+---
+
+## Project Methodology
+
+This project follows the Agile Software Development Methodology with multiple sprints, continuous integration, and code reviews.
+
+---
 
 ## Team Roles
 
