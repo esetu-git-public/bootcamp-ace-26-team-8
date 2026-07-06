@@ -1,5 +1,39 @@
 # Loan Default Prediction - System Architecture
 
+## Project Architecture
+
+```mermaid
+flowchart TD
+
+A[User]
+
+A --> B[Frontend]
+
+B --> C[FastAPI Backend]
+
+C --> D[Prediction API]
+
+D --> E[Data Preprocessing]
+
+E --> F[Machine Learning Model]
+
+F --> G[Prediction Response]
+
+G --> B
+
+subgraph Data Pipeline
+H[Raw Dataset]
+I[Processed Dataset]
+J[Model Training]
+K[Saved Model]
+end
+
+H --> I
+I --> J
+J --> K
+K --> F
+```
+
 ## Overview
 
 The system predicts whether a customer is likely to default on a loan based on the information provided in the loan application.
@@ -7,7 +41,7 @@ The system predicts whether a customer is likely to default on a loan based on t
 ## Workflow
 
 Customer
-   ↓
+   ↓git
 Register
    ↓
 Login
