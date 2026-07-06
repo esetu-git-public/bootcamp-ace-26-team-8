@@ -1,51 +1,17 @@
+
 # Project Setup Guide
 
-## Prerequisites
+## Python Version
+Python 3.10+
 
-Before running the project, install:
-
-- Python 3.10 or above
-- Git
-- Visual Studio Code
-
-## Clone the Repository
-
-```bash
-git clone <repository-url>
-```
-
-## Create a Virtual Environment
-
-```bash
+## Create Virtual Environment
 python -m venv venv
-```
 
-## Activate the Virtual Environment
-
-### Windows
-
-```bash
+## Activate
 venv\Scripts\activate
-```
 
-### Linux / macOS
+## Install
+pip install -r backend/requirements.txt
 
-```bash
-source venv/bin/activate
-```
-
-## Install Required Packages
-
-```bash
-pip install -r requirements.txt
-```
-
-## Project Folder Structure
-
-- app/
-- data/
-- docs/
-- models/
-- notebooks/
-- reports/
-- src/
+## Run Backend
+uvicorn backend.main:app --reload
