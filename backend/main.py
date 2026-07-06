@@ -8,9 +8,10 @@ app = FastAPI(
 )
 
 class LoanInput(BaseModel):
-age: int
-income: int
-loan_amount: int
+    age: int
+    income: int
+    loan_amount: int
+
 
 @app.get("/")
 def welcome():
@@ -18,18 +19,24 @@ def welcome():
         "message": "Loan Default Prediction API is running"
     }
 
+
 @app.get("/health")
 def health_check():
     return {
         "status": "healthy",
         "message": "API is running successfully."
     }
+
+
 def home():
-return {"message": "Loan Default Prediction API is running"}
+    return {
+        "message": "Loan Default Prediction API is running"
+    }
+
 
 @app.post("/predict")
 def predict(data: LoanInput):
-return {
-"received_data": data,
-"result": "working"
-}
+    return {
+        "received_data": data,
+        "result": "working"
+    }
