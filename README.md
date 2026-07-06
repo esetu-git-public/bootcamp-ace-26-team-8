@@ -8,7 +8,7 @@ This project aims to predict whether a borrower is likely to default on a loan u
 
 ## Problem Statement
 
-Loan defaults can lead to significant losses for banks and financial institutions. This project builds a machine learning model that predicts loan default based on customer and loan-related information.
+Loan defaults cause financial losses for banks and lending institutions. This project develops a machine learning model to predict whether a customer is likely to default on a loan based on customer and loan-related information, helping institutions make informed lending decisions.
 
 ---
 
@@ -24,6 +24,17 @@ Loan defaults can lead to significant losses for banks and financial institution
 
 ---
 
+## Features
+
+- User Registration
+- User Login
+- Loan Application Submission
+- Loan Default Prediction using Machine Learning
+- Loan Approval/Rejection Workflow
+- Loan Status Tracking
+- Dashboard for Users
+
+
 ## Technologies Used
 
 - Python
@@ -37,22 +48,54 @@ Loan defaults can lead to significant losses for banks and financial institution
 - Git & GitHub
 
 ---
+## Installation
+
+### Clone the Repository
+
+```bash
+git clone <repository-url>
+```
+
+### Install Backend Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### Run Backend
+
+```bash
+python backend/main.py
+```
+
+### Run Frontend
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+
 
 ## Project Structure
 
 ```text
-app/
-data/
-docs/
-models/
-notebooks/
-reports/
-src/
-requirements.txt
-README.md
+bootcamp-ace-26-team-8/
+│
+├── backend/
+├── frontend/
+├── data/
+├── docs/
+├── models/
+├── notebooks/
+├── reports/
+├── src/
+├── tests/
+├── .gitignore
+├── requirements.txt
+└── README.md
 ```
-
----
 
 ## Team Roles
 
@@ -61,3 +104,27 @@ README.md
 - Scrum Master
 - Team Lead
 - Developer
+
+---
+
+## Team Members
+
+Business Owner                  : Sai Kumar
+Product Owner                   : Deekshith
+Developer                       : Manikanta
+Scrum Master                    : Renuka
+Team Lead                       : Varshitha
+Backend Developer               : Renuka
+ML Engineer                     : Deekshith
+Frontend Developer              : Manikanta
+Database & Integration          : Sai Kumar
+ 
+ -----
+
+ ## Future Enhancements
+
+- Deploy the application to the cloud.
+- Improve prediction accuracy using advanced ML algorithms.
+- Add email notifications.
+- Build an admin dashboard.
+- Implement real-time analytics.
