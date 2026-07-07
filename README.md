@@ -75,6 +75,35 @@ The dataset contains borrower information such as demographic details, financial
 - GitHub
 
 ---
+## Installation
+
+### Clone the Repository
+
+```bash
+git clone <repository-url>
+```
+
+### Install Backend Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### Run Backend
+
+```bash
+python backend/main.py
+```
+
+### Run Frontend
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+
 
 ## Project Architecture
 
@@ -143,3 +172,27 @@ This project follows the Agile Software Development Methodology with multiple sp
 - Scrum Master
 - Team Lead
 - Developer
+
+---
+
+## Team Members
+
+Business Owner                  : Sai Kumar
+Product Owner                   : Deekshith
+Developer                       : Manikanta
+Scrum Master                    : Renuka
+Team Lead                       : Varshitha
+Backend Developer               : Renuka
+ML Engineer                     : Deekshith
+Frontend Developer              : Manikanta
+Database & Integration          : Sai Kumar
+ 
+ -----
+
+ ## Future Enhancements
+
+- Deploy the application to the cloud.
+- Improve prediction accuracy using advanced ML algorithms.
+- Add email notifications.
+- Build an admin dashboard.
+- Implement real-time analytics.

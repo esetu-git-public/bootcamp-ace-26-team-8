@@ -1,35 +1,24 @@
 # Exploratory Data Analysis (EDA) Report
 
-## Project
-Loan Default Prediction
+## Objective
 
-## Dataset Overview
+Analyze the Loan Default dataset to understand its structure, identify missing values, detect outliers, and study relationships between features.
 
-- Total Records: 255,347
-- Total Features: 18
-- Target Column: Default
+## Dataset
 
-## Data Exploration Summary
+- Dataset Name: Loan Default Dataset
+- Type: Binary Classification
+- Target Variable: Loan Default (Yes/No)
 
-- Dataset loaded successfully.
-- No missing values were found.
-- No duplicate records were found.
-- The dataset contains both numerical and categorical features.
+## EDA Tasks
 
-## Feature Types
-
-- Integer Features: 8
-- Float Features: 2
-- Categorical Features: 8
-
-## Observations
-
-- The dataset is clean and ready for preprocessing.
-- The `LoanID` column is a unique identifier and may be excluded during model training.
-- The target variable `Default` is binary:
-  - 0 = No Default
-  - 1 = Default
+- Checked dataset shape.
+- Identified missing values.
+- Analyzed numerical features.
+- Analyzed categorical features.
+- Detected outliers.
+- Generated summary statistics.
 
 ## Status
 
-EDA initialization completed during Sprint 1.
+EDA documentation initialized.
