@@ -1,0 +1,62 @@
+[33m19e2342[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mscrum-master[m[33m, [m[1;31morigin/scrum-master[m[33m)[m Cleaned project (removed venv & pycache)
+[33m5eec3a8[m[33m ([m[1;32mdeveloper[m[33m)[m Work in progress - JWT APIs
+[33mffed002[m[33m ([m[1;31morigin/developer[m[33m)[m Added replace.txt
+[33m1b87a32[m Resolved all merge conflicts
+[33m57411d4[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m Merge pull request #11 from esetu-git-public/scrum-master
+[33m2e811e8[m Merge pull request #10 from esetu-git-public/product_owner
+[33m6d85edc[m Merge pull request #7 from esetu-git-public/business_owner
+[33m08bda90[m Merge main into developer
+[33m8e36c18[m Resolved merge conflict in main.py
+[33m4fa1ab9[m Resolved merge conflict
+[33m344375d[m Completed project structure
+[33mac3a96f[m temp commit before rewrite
+[33mcfdebba[m Initialize testing framework
+[33m4f13d2f[m Task 9: Updated backend dependencies
+[33m0010ead[m Updated Project Setup Guide
+[33m54b17fa[m Update main.py
+[33m98be11a[m Add non_functional_req
+[33m2d544f6[m added scrum master docs
+[33mb2bad0d[m Complete Sprint 1 developer tasks 5/7/26
+[33md5e8ec6[m Update dataset documentation
+[33mc0eb2e6[m Add project architecture diagram
+[33mf66e697[m Improve README documentation
+[33mf8d3fab[m Merge pull request #6 from esetu-git-public/team-lead
+[33m61198bc[m Merge pull request #6 from esetu-git-public/team-lead
+[33m593f217[m[33m ([m[1;32mteam-lead[m[33m)[m Merge branch 'main' into team-lead
+[33m38284ea[m Merge branch 'main' into team-lead
+[33m20998b9[m Added project documentation
+[33m9955834[m Added project documentation
+[33m3ffc050[m Merge pull request #5 from esetu-git-public/developer
+[33mbe27762[m Merge pull request #5 from esetu-git-public/developer
+[33m00e8601[m Add backend setup and data preprocessing notebook
+[33m5568bd3[m Add backend setup and data preprocessing notebook
+[33mc53d1d3[m Merge pull request #4 from esetu-git-public/business_owner
+[33m8123d47[m Merge pull request #4 from esetu-git-public/business_owner
+[33mccb549d[m[33m ([m[1;32mbusiness_owner[m[33m)[m Restore business documentation after merge
+[33m088ff80[m Restore business documentation after merge
+[33m2ecfdc5[m Merge pull request #3 from esetu-git-public/product_owner
+[33m8694671[m Merge pull request #3 from esetu-git-public/product_owner
+[33m5056e5d[m[33m ([m[1;32mproduct_owner[m[33m)[m Merge branch 'product_owner' of https://github.com/esetu-git-public/bootcamp-ace-26-team-8 into product_owner
+[33m9bc45f6[m Merge branch 'product_owner' of https://github.com/esetu-git-public/bootcamp-ace-26-team-8 into product_owner
+[33m0aec1cd[m Add system requirements and update project documentation
+[33me132e6b[m Add system requirements and update project documentation
+[33mb379f77[m Rename functional_requirments.txt to functional_requirments.md
+[33m845d17a[m Rename functional_requirments.txt to functional_requirments.md
+[33m96e1835[m add functional_req doc
+[33mdef7a61[m add functional_req doc
+[33m5c0addd[m Merge pull request #2 from esetu-git-public/business_owner
+[33m019369f[m Merge pull request #2 from esetu-git-public/business_owner
+[33m0f0423d[m Add business requirements
+[33m90a9ad2[m Add business requirements
+[33m5ff8419[m Add business objectives
+[33mfadd4bc[m Add business objectives
+[33mc5a31c4[m Merge pull request #1 from esetu-git-public/business-problem-statement
+[33mae47aa7[m Merge pull request #1 from esetu-git-public/business-problem-statement
+[33m87218b3[m Add business problem statement
+[33mdf650aa[m Add business problem statement
+[33mfa7fbf7[m Initial project structure
+[33m95c2467[m Initial project structure
+[33mb68b61e[m Initial project structure
+[33m1cf7abe[m Initial project structure
+[33ma0a7f8d[m Initial commit
+[33m9386a90[m Initial commit
