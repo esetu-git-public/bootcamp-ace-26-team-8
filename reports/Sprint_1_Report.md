@@ -1,27 +1,35 @@
 # Sprint 1 Report
 
+## Sprint Duration
+Day 1 - Day 3
+
 ## Sprint Goal
 
-Complete the project foundation and prepare for machine learning development.
+Initialize the Loan Default Prediction project, define project scope, assign responsibilities, and establish the project architecture.
 
-## Completed Tasks
+## Team Lead Activities
 
-- Repository structure initialized.
-- Dataset added.
-- Data preprocessing notebook initialized.
-- Backend structure created.
-- Reports folder created.
-- Dataset documentation prepared.
+### Day 1
+- Defined project scope and objectives.
+- Coordinated Sprint Planning with the team.
 
-## Pending Tasks
+### Day 2
+- Assigned tasks to team members.
+- Structured the overall project architecture.
 
-- Feature Engineering
-- Model Training
-- API Integration
-- Frontend Development
-- Testing
-- Deployment
+### Day 3
+- Monitored development progress.
+- Ensured smooth workflow among team members.
 
-## Sprint Outcome
+## Deliverables
 
-The project foundation has been successfully established. The repository is organized and ready for the next sprint, which will focus on preprocessing, feature engineering, and machine learning model development.
+- Project repository initialized.
+- Documentation created.
+- Backend and frontend setup started.
+- Project architecture prepared.
+- Team roles finalized.
+
+## Sprint Status
+
+✅ Sprint 1 Completed
+

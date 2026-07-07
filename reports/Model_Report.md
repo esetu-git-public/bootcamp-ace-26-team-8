@@ -1,11 +1,12 @@
-# Model Report
+# Machine Learning Model Report
 
-## Project
-Loan Default Prediction
+## Objective
 
-## Sprint Status
+Develop a machine learning model to predict whether a borrower is likely to default on a loan.
 
-Model development has not started.
+## Problem Type
+
+Binary Classification
 
 ## Planned Models
 
@@ -22,6 +23,6 @@ Model development has not started.
 - F1-Score
 - ROC-AUC
 
-## Status
+## Model Status
 
-This report will be updated in future sprints after model training and evaluation.
+Model development is in progress.
