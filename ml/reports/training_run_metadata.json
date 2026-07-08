@@ -1,0 +1,16 @@
+{
+  "best_model": "LogisticRegression",
+  "best_cv_recall": 0.6856080777315965,
+  "best_params": {
+    "model__solver": "lbfgs",
+    "model__penalty": "l2",
+    "model__C": 0.1
+  },
+  "train_rows": 204277,
+  "test_rows": 51070,
+  "train_default_rate": 0.11612663197521013,
+  "test_default_rate": 0.11613471705502251,
+  "random_state": 42,
+  "total_runtime_seconds": 102.21,
+  "model_artifact_path": "models/loan_pipeline.pkl"
+}

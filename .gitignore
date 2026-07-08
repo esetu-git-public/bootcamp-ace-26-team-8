@@ -18,3 +18,20 @@ __pycache__/
 # OS files
 .DS_Store
 Thumbs.db
+
+# macOS
+.DS_Store
+
+# Python virtual environment
+ml/venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Temporary test files
+ml/test_model.py
+ml/test_prediction.py

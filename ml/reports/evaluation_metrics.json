@@ -1,0 +1,141 @@
+{
+  "model_type": "LogisticRegression",
+  "test_set_size": 51070,
+  "test_default_rate": 0.11613471705502251,
+  "metrics": {
+    "accuracy": 0.6911494027804973,
+    "precision_default_class": 0.2282716731087797,
+    "recall_default_class": 0.6970156803237229,
+    "f1_default_class": 0.3439124828418119,
+    "roc_auc": 0.7614691917984924
+  },
+  "confusion_matrix": {
+    "matrix": [
+      [
+        31163,
+        13976
+      ],
+      [
+        1797,
+        4134
+      ]
+    ],
+    "labels": [
+      "No Default (0)",
+      "Default (1)"
+    ],
+    "true_negatives": 31163,
+    "false_positives": 13976,
+    "false_negatives": 1797,
+    "true_positives": 4134
+  },
+  "classification_report": {
+    "No Default": {
+      "precision": 0.9454793689320389,
+      "recall": 0.6903786082988104,
+      "f1-score": 0.7980383871752519,
+      "support": 45139.0
+    },
+    "Default": {
+      "precision": 0.2282716731087797,
+      "recall": 0.6970156803237229,
+      "f1-score": 0.3439124828418119,
+      "support": 5931.0
+    },
+    "accuracy": 0.6911494027804973,
+    "macro avg": {
+      "precision": 0.5868755210204093,
+      "recall": 0.6936971443112666,
+      "f1-score": 0.5709754350085319,
+      "support": 51070.0
+    },
+    "weighted avg": {
+      "precision": 0.8621866561079199,
+      "recall": 0.6911494027804973,
+      "f1-score": 0.7452986037681315,
+      "support": 51070.0
+    }
+  },
+  "feature_importance_top_20": [
+    {
+      "feature": "Age",
+      "importance": 0.5817601931131565
+    },
+    {
+      "feature": "LoanToIncomeRatio",
+      "importance": 0.4731799203615088
+    },
+    {
+      "feature": "InterestRate",
+      "importance": 0.46757485991103886
+    },
+    {
+      "feature": "MonthsEmployed",
+      "importance": 0.34772679385774974
+    },
+    {
+      "feature": "EmploymentType_Full-time",
+      "importance": 0.26391697702145916
+    },
+    {
+      "feature": "LoanPurpose_Home",
+      "importance": 0.18110416169467694
+    },
+    {
+      "feature": "HasCoSigner_Yes",
+      "importance": 0.18089356872966678
+    },
+    {
+      "feature": "HasDependents_Yes",
+      "importance": 0.17743663472488205
+    },
+    {
+      "feature": "EmploymentType_Unemployed",
+      "importance": 0.17188951169070657
+    },
+    {
+      "feature": "MaritalStatus_Married",
+      "importance": 0.15133284418965515
+    },
+    {
+      "feature": "Education_PhD",
+      "importance": 0.1445126828621554
+    },
+    {
+      "feature": "HasMortgage_Yes",
+      "importance": 0.12935041358185484
+    },
+    {
+      "feature": "CreditScore",
+      "importance": 0.12378410367271313
+    },
+    {
+      "feature": "Education_High School",
+      "importance": 0.1144075450928923
+    },
+    {
+      "feature": "NumCreditLines",
+      "importance": 0.10542222932625818
+    },
+    {
+      "feature": "Education_Master's",
+      "importance": 0.10302365043053871
+    },
+    {
+      "feature": "HasCoSigner_No",
+      "importance": 0.08386087963965025
+    },
+    {
+      "feature": "HasDependents_No",
+      "importance": 0.08040394563487265
+    },
+    {
+      "feature": "LoanPurpose_Business",
+      "importance": 0.07542041696314433
+    },
+    {
+      "feature": "DTIRatio",
+      "importance": 0.07058456312126983
+    }
+  ]
+}

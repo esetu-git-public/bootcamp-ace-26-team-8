@@ -9,4 +9,4 @@ imbalanced-learn==0.12.3
 jupyter==1.0.0
 ipykernel==6.29.5
 scipy==1.13.1
-tabulate==0.9.0git
+tabulate==0.9.0
