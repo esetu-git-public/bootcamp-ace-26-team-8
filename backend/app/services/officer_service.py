@@ -26,10 +26,12 @@ from typing import Dict, List, Optional, Set
 from fastapi import HTTPException, status
 
 from app.core.logging import get_logger
-from app.schemas.loan_schema import LoanApplicationListResponse, LoanApplicationRecord, LoanStatus
-from app.schemas.officer_schema import (
-    OfficerApplicationUpdateRequest,
-    OfficerApplicationUpdateResponse,
+from app.schemas.loan_schema import (
+    LoanApplicationListResponse,
+    LoanApplicationRecord,
+    LoanStatus,
+    OfficerStatusUpdateRequest,
+    OfficerStatusUpdateResponse,
 )
 from app.services import supabase_service
 
@@ -140,9 +142,9 @@ def list_applications(
 
 def update_application_status(
     application_id: str,
-    payload: OfficerApplicationUpdateRequest,
+    payload: OfficerStatusUpdateRequest,
     officer_user_id: str,
-) -> OfficerApplicationUpdateResponse:
+) -> OfficerStatusUpdateResponse:
     """
     Applies an officer's decision to a loan application: validates the role
     (enforced upstream via the route dependency), validates the requested
@@ -201,7 +203,7 @@ def update_application_status(
         target_status.value,
     )
 
-    return OfficerApplicationUpdateResponse(
+    return OfficerStatusUpdateResponse(
         application_id=application_id,
         status=target_status,
         reviewed_by=officer_user_id,
