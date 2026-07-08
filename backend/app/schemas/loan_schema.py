@@ -1,7 +1,8 @@
 """
 loan_schema.py
 
-Pydantic request/response models for the Loan Application APIs.
+Pydantic request/response models for the Loan Application APIs and the
+Officer review workflow.
 
 Responsibilities (per project blueprint, Section 9 — Data Flow Requirements
 and Section 10 — API Design):
@@ -17,6 +18,10 @@ and Section 10 — API Design):
     - Represent the full persisted loan application record, including
       workflow/audit fields (status, submitted_date, reviewed_by,
       reviewed_date, updated_date).
+    - Represent the Officer status-update request/response contract for
+      `PATCH /api/v1/officer/applications/{id}` (kept in this file, rather
+      than a separate schema module, to match the repository structure
+      exactly).
 
 The categorical Enums below mirror `CATEGORICAL_LABEL_MAP` in
 `ml/src/data_cleaning.py` exactly, so a request that validates here is
@@ -77,7 +82,7 @@ class LoanStatus(str, Enum):
 
 
 # --------------------------------------------------------------------------- #
-# Request schema
+# Request schema — Loan Application submission
 # --------------------------------------------------------------------------- #
 class LoanApplicationRequest(BaseModel):
     """
@@ -148,7 +153,7 @@ class LoanApplicationRequest(BaseModel):
 
 
 # --------------------------------------------------------------------------- #
-# Response schemas
+# Response schemas — Loan Applications
 # --------------------------------------------------------------------------- #
 class LoanApplicationSubmitResponse(BaseModel):
     """Response body for `POST /api/v1/loan/apply` (Section 10 — API Design)."""
@@ -197,6 +202,7 @@ class LoanApplicationRecord(BaseModel):
     reviewed_by: Optional[str] = None
     reviewed_date: Optional[datetime] = None
     updated_date: Optional[datetime] = None
+    review_note: Optional[str] = None
 
     model_config = {"from_attributes": True}
 
@@ -206,3 +212,68 @@ class LoanApplicationListResponse(BaseModel):
 
     total: int
     items: list[LoanApplicationRecord]
+
+
+# --------------------------------------------------------------------------- #
+# Officer request/response schemas — folded into loan_schema.py
+# --------------------------------------------------------------------------- #
+class OfficerStatusUpdateRequest(BaseModel):
+    """
+    Request body for `PATCH /api/v1/officer/applications/{id}`.
+
+    Per Section 10 — API Design: `{status, note}`. A reviewer note is
+    mandatory so every status transition carries a documented rationale
+    for audit/compliance purposes.
+    """
+
+    status: LoanStatus = Field(..., description="Target status for this transition.")
+    note: str = Field(
+        ..., min_length=3, max_length=1000, description="Mandatory reviewer note."
+    )
+
+    @field_validator("status")
+    @classmethod
+    def reject_submitted_as_target(cls, value: LoanStatus) -> LoanStatus:
+        if value == LoanStatus.SUBMITTED:
+            raise ValueError(
+                "'submitted' is set automatically at creation and is not a "
+                "valid officer transition target."
+            )
+        return value
+
+    model_config = {
+        "json_schema_extra": {
+            "example": {
+                "status": "approved",
+                "note": "Income and credit history verified; approved per policy.",
+            }
+        }
+    }
+
+
+class OfficerStatusUpdateResponse(BaseModel):
+    """
+    Response body for `PATCH /api/v1/officer/applications/{id}`: the
+    updated application record plus a summary of the transition just
+    applied.
+    """
+
+    application_id: str
+    status: LoanStatus
+    reviewed_by: str
+    reviewed_date: datetime
+    note: str
+    application: LoanApplicationRecord
+
+
+class OfficerApplicationFilterParams(BaseModel):
+    """
+    Query parameter shape for `GET /api/v1/officer/applications`, per
+    Section 10 — API Design: "Query params: status, date range, page."
+    """
+
+    status: Optional[LoanStatus] = Field(default=None)
+    date_from: Optional[datetime] = Field(default=None)
+    date_to: Optional[datetime] = Field(default=None)
+    page: int = Field(default=1, ge=1)
+    page_size: int = Field(default=20, ge=1, le=100)
