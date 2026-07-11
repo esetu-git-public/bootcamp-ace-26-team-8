@@ -1,1 +1,0 @@
-# API Tests for Loan Default Prediction
