@@ -32,6 +32,7 @@ from app.api.v1 import (
 )
 from app.core.config import get_settings
 from app.core.logging import configure_logging, get_logger
+from app.middleware.auth_middleware import AuthContextMiddleware
 from app.middleware.error_handler import register_exception_handlers
 from app.ml.model_loader import get_model_loader
 
@@ -88,6 +89,11 @@ def create_application() -> FastAPI:
         openapi_url="/openapi.json" if not settings.is_production else None,
         lifespan=lifespan,
     )
+
+    # Registered before CORSMiddleware so its request-id binding and
+    # start/end audit logging (app/middleware/auth_middleware.py) wrap the
+    # entire request lifecycle, including CORS preflight (OPTIONS) requests.
+    application.add_middleware(AuthContextMiddleware)
 
     application.add_middleware(
         CORSMiddleware,
