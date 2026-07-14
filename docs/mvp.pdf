@@ -1,0 +1,78 @@
+Loan Default Prediction System
+MVP (Minimum Viable Product)
+Objective
+
+Develop a web application that predicts whether a loan applicant is likely to default using a machine learning model. The system should allow users to register, submit loan details, receive a prediction, and store the information in the database.
+
+Phase 1: Machine Learning
+Goal
+
+Build and train a machine learning model for loan default prediction.
+
+Tasks
+Collect and understand the dataset.
+Perform Exploratory Data Analysis (EDA).
+Clean and preprocess the data.
+Handle missing values and encode categorical features.
+Split the dataset into training and testing sets.
+Train different machine learning models.
+Evaluate model performance.
+Select the best-performing model.
+Save the trained model using joblib.
+Deliverables
+Clean dataset
+Trained ML model
+Saved model (model.joblib)
+Model evaluation report
+
+
+
+Phase 2: Backend (FastAPI + Supabase)
+Goal
+
+Develop backend APIs, integrate the machine learning model, and manage database operations.
+
+Tasks
+Authentication
+User Registration API
+User Login API
+Prediction
+Load the trained ML model
+Create Prediction API
+Validate user input
+Return prediction result
+Database (Supabase)
+Store user details
+Store loan application details
+Store prediction results
+Retrieve prediction history (optional)
+API & Testing
+Create REST APIs
+API documentation using Swagger
+Unit testing for backend APIs
+Deliverables
+FastAPI backend
+Integrated ML model
+Supabase database integration
+Working APIs
+API documentation
+
+
+
+Phase 3: Frontend (React)
+Goal
+
+Build a user-friendly interface for interacting with the prediction system.
+
+Tasks
+Login page
+Registration page
+Loan application form
+Prediction result page
+Connect frontend to backend APIs
+Form validation
+Responsive design
+Deliverables
+React frontend
+API integration
+Prediction display
