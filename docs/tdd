@@ -1,0 +1,79 @@
+TDD (Test-Driven Development)
+Goal
+
+Write tests before implementing features to ensure the system is reliable and maintainable.
+
+Phase 1: Machine Learning Tests
+
+Test ID	Test Case	Expected Result
+ML-01	Load dataset	Dataset loads successfully
+ML-02	Data preprocessing	Clean dataset generated
+ML-03	Feature encoding	Features encoded correctly
+ML-04	Train model	Model trained successfully
+ML-05	Evaluate model	Performance metrics generated
+ML-06	Save model	model.joblib file created
+
+
+Phase 2: Backend Tests
+
+Authentication
+Test ID	Test Case	Expected Result
+AUTH-01	Register user	User registered successfully
+AUTH-02	Duplicate registration	Error returned
+AUTH-03	Valid login	Login successful
+AUTH-04	Invalid login	Authentication fails
+Prediction API
+Test ID	Test Case	Expected Result
+PRED-01	Load ML model	Model loads successfully
+PRED-02	Valid loan details	Prediction returned
+PRED-03	Invalid input	Validation error
+PRED-04	Prediction response	Status code 200
+Database
+Test ID	Test Case	Expected Result
+DB-01	Save user details	Record stored successfully
+DB-02	Save loan application	Record stored successfully
+DB-03	Save prediction result	Record stored successfully
+DB-04	Retrieve prediction history	Data returned correctly
+Phase 3: Frontend Tests
+Test ID	Test Case	Expected Result
+UI-01	Login page	Loads successfully
+UI-02	Registration page	Loads successfully
+UI-03	Loan form validation	Invalid inputs show errors
+UI-04	Submit loan application	API called successfully
+UI-05	Display prediction	Prediction shown correctly
+UI-06	Responsive UI	Works on different screen sizes
+Integration Tests
+Test ID	Test Case	Expected Result
+INT-01	Frontend ↔ Backend	Data exchanged successfully
+INT-02	Backend ↔ ML Model	Prediction generated correctly
+INT-03	Backend ↔ Supabase	Data stored successfully
+INT-04	End-to-end workflow	Complete prediction flow works
+Development Order
+Phase 1 – Machine Learning
+EDA
+Data Cleaning
+Feature Engineering
+Model Training
+Model Evaluation
+Save Model
+
+⬇️
+
+Phase 2 – Backend
+FastAPI setup
+Supabase integration
+Authentication APIs
+Prediction API
+ML model integration
+Database operations
+Backend testing
+
+⬇️
+
+Phase 3 – Frontend
+React setup
+Login/Register pages
+Loan application form
+Prediction results page
+API integration
+UI testing
