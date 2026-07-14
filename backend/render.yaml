@@ -1,3 +1,19 @@
+# --------------------------------------------------------------------------- #
+# Loan Default Prediction System — Backend (FastAPI) Render Blueprint
+#
+# Native Python runtime (no Docker) — Render clones the full monorepo,
+# `rootDir: backend` sets the working directory for the build/start
+# commands, but the repository layout (ml/ as a sibling of backend/) is
+# preserved, so app/core/config.py's default MODEL_PATH
+# ("../ml/models/loan_pipeline.pkl") resolves correctly from within
+# backend/ without any path changes.
+#
+# Per project blueprint Section 12 — Deployment Plan: build via
+# requirements.txt, start command launches FastAPI via uvicorn, health
+# check path set to /health (here, the full versioned path
+# /api/v1/health, matching routes_health.py).
+# --------------------------------------------------------------------------- #
+
 services:
   - type: web
     name: loan-default-prediction-api
@@ -9,3 +25,38 @@ services:
     startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
     healthCheckPath: /api/v1/health
     autoDeploy: true
+
+    envVars:
+      # --- General ---
+      - key: ENVIRONMENT
+        value: production
+      - key: LOG_LEVEL
+        value: INFO
+
+      # --- Supabase (secrets — set manually in the Render dashboard, never committed) ---
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_ROLE_KEY
+        sync: false
+      - key: SUPABASE_JWT_SECRET
+        sync: false
+      - key: SUPABASE_JWKS_URL
+        sync: false
+
+      # --- ML Model ---
+      # Relative to rootDir (backend/), matching config.py's default and
+      # the repository's ml/ sibling-directory layout.
+      - key: MODEL_PATH
+        value: ../ml/models/loan_pipeline.pkl
+
+      # --- CORS ---
+      # Must exactly match the deployed Vercel frontend URL (and any
+      # preview URLs, comma-separated) once the frontend is deployed.
+      - key: CORS_ALLOWED_ORIGINS
+        sync: false
+
+      # --- Auth ---
+      - key: JWT_ALGORITHM
+        value: HS256
+      - key: ACCESS_TOKEN_AUDIENCE
+        value: authenticated
