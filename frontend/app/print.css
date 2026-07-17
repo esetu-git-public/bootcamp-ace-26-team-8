@@ -1,0 +1,23 @@
+/* Imported by app/layout.tsx. Hides chrome (nav/sidebar/actions) and
+   resets surfaces to plain paper when the browser's print dialog is
+   invoked from an application detail page's "Print" button. */
+   @media print {
+    nav,
+    aside,
+    .no-print {
+      display: none !important;
+    }
+  
+    body {
+      background: #ffffff !important;
+    }
+  
+    main {
+      padding: 0 !important;
+    }
+  
+    .print-surface {
+      box-shadow: none !important;
+      border: none !important;
+    }
+  }

@@ -1,0 +1,125 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Ledger palette — light mode */
+  --color-surface: #ffffff;
+  --color-surface-muted: #f6f7f9;
+  --color-surface-inset: #eef0f3;
+
+  --color-ink: #101828;
+  --color-ink-muted: #5b6472;
+  --color-ink-faint: #98a2b3;
+
+  --color-border: #e3e6eb;
+
+  --color-navy: #101828;
+  --color-navy-light: #1d2939;
+
+  --color-brand: #1f8a70;
+  --color-brand-hover: #17705a;
+  --color-brand-subtle: #e6f4f0;
+
+  --color-success: #1f8a70;
+  --color-success-subtle: #e6f4f0;
+
+  --color-warning: #b1740f;
+  --color-warning-subtle: #fbf0dd;
+
+  --color-danger: #b3261e;
+  --color-danger-subtle: #fbe9e8;
+
+  --font-display: "Space Grotesk", sans-serif;
+  --font-sans: "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+.dark {
+  --color-surface: #0d1420;
+  --color-surface-muted: #101828;
+  --color-surface-inset: #182234;
+
+  --color-ink: #f1f3f6;
+  --color-ink-muted: #9aa4b2;
+  --color-ink-faint: #667085;
+
+  --color-border: #232d3d;
+
+  --color-navy: #0a0f1a;
+  --color-navy-light: #131c2b;
+
+  --color-brand: #35b696;
+  --color-brand-hover: #46c8a8;
+  --color-brand-subtle: rgba(53, 182, 150, 0.12);
+
+  --color-success: #35b696;
+  --color-success-subtle: rgba(53, 182, 150, 0.12);
+
+  --color-warning: #d99a3d;
+  --color-warning-subtle: rgba(217, 154, 61, 0.12);
+
+  --color-danger: #e2564d;
+  --color-danger-subtle: rgba(226, 86, 77, 0.12);
+}
+
+* {
+  border-color: var(--color-border);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-surface-muted);
+  color: var(--color-ink);
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+}
+
+::selection {
+  background-color: var(--color-brand-subtle);
+  color: var(--color-brand);
+}
+
+/* Ledger figures — the signature: every numeric/financial value in the
+   product uses this class so amounts, scores, and rates read as entries
+   in a ledger, visually distinct from prose. */
+.figure {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+.focus-ring {
+  outline: none;
+}
+.focus-ring:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-ink-faint);
+  border-radius: 999px;
+  border: 2px solid var(--color-surface-muted);
+}

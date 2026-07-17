@@ -12,6 +12,20 @@ Section 11 — Environment Variables):
       path, JWT verification secrets, CORS origins, and logging level.
     - Expose a cached singleton accessor (`get_settings`) so environment
       variables are parsed only once per process.
+
+JWKS / issuer construction (critical for auth correctness):
+    Supabase's Auth server issues JWTs with:
+        iss = "{SUPABASE_URL}/auth/v1"
+        aud = "authenticated"          (unless a custom audience is configured)
+    and publishes its JWKS at:
+        "{SUPABASE_URL}/auth/v1/.well-known/jwks.json"
+    `jwks_url` and `issuer` below are DERIVED from `SUPABASE_URL`
+    automatically so a misconfigured/misspelled manual override can't
+    silently break every single authenticated request. `SUPABASE_JWKS_URL`
+    and `SUPABASE_ISSUER` remain available as explicit overrides for
+    self-hosted Supabase or non-standard setups, but the common case
+    (hosted Supabase) requires setting `SUPABASE_URL` correctly and
+    nothing else.
 """
 
 from __future__ import annotations
@@ -54,7 +68,7 @@ class Settings(BaseSettings):
     # --------------------------------------------------------------------- #
     SUPABASE_URL: str = Field(
         default="",
-        description="Backend's Supabase client initialization URL.",
+        description="Backend's Supabase project URL, e.g. https://xxxx.supabase.co",
     )
     SUPABASE_SERVICE_ROLE_KEY: str = Field(
         default="",
@@ -65,11 +79,39 @@ class Settings(BaseSettings):
     )
     SUPABASE_JWT_SECRET: str = Field(
         default="",
-        description="Secret used to verify JWTs issued by Supabase Auth.",
+        description=(
+            "Legacy shared HS256 secret. Only used as a fallback when a "
+            "token's own header declares alg=HS256; modern Supabase "
+            "projects use ES256/RS256 via JWKS instead."
+        ),
     )
     SUPABASE_JWKS_URL: str = Field(
         default="",
-        description="Optional JWKS URL, used instead of a static secret if provided.",
+        description=(
+            "Explicit JWKS URL override. Leave blank to auto-derive from "
+            "SUPABASE_URL as '{SUPABASE_URL}/auth/v1/.well-known/jwks.json' "
+            "(correct for standard hosted Supabase projects)."
+        ),
+    )
+    SUPABASE_ISSUER: str = Field(
+        default="",
+        description=(
+            "Explicit 'iss' claim override. Leave blank to auto-derive from "
+            "SUPABASE_URL as '{SUPABASE_URL}/auth/v1' (correct for standard "
+            "hosted Supabase projects)."
+        ),
+    )
+    JWT_ALLOWED_ALGORITHMS: str = Field(
+        default="ES256,RS256",
+        description=(
+            "Comma-separated algorithms accepted on the JWKS verification "
+            "path. Must match the signing algorithm(s) shown in Supabase "
+            "Dashboard -> Settings -> API -> JWT Keys."
+        ),
+    )
+    JWKS_CACHE_TTL_SECONDS: int = Field(
+        default=3600,
+        description="How long PyJWKClient caches fetched signing keys before refetching.",
     )
 
     # --------------------------------------------------------------------- #
@@ -96,11 +138,11 @@ class Settings(BaseSettings):
     # --------------------------------------------------------------------- #
     JWT_ALGORITHM: str = Field(
         default="HS256",
-        description="Algorithm used to verify Supabase-issued JWTs.",
+        description="Algorithm used on the legacy HS256 shared-secret fallback path only.",
     )
     ACCESS_TOKEN_AUDIENCE: str = Field(
         default="authenticated",
-        description="Expected 'aud' claim on Supabase Auth JWTs.",
+        description="Expected 'aud' claim on Supabase Auth JWTs (Supabase's default).",
     )
 
     @field_validator("LOG_LEVEL")
@@ -127,6 +169,43 @@ class Settings(BaseSettings):
             for origin in self.CORS_ALLOWED_ORIGINS.split(",")
             if origin.strip()
         ]
+
+    @property
+    def allowed_algorithms_list(self) -> List[str]:
+        """
+        Splits JWT_ALLOWED_ALGORITHMS into a clean list, e.g. ["ES256", "RS256"].
+        """
+        return [
+            alg.strip()
+            for alg in self.JWT_ALLOWED_ALGORITHMS.split(",")
+            if alg.strip()
+        ]
+
+    @property
+    def jwks_url(self) -> str:
+        """
+        Returns the effective JWKS endpoint: `SUPABASE_JWKS_URL` if
+        explicitly set, otherwise derived from `SUPABASE_URL` using
+        Supabase's standard convention. Trailing slashes on SUPABASE_URL
+        are stripped before deriving, so 'https://x.supabase.co/' and
+        'https://x.supabase.co' both produce an identical, correct URL.
+        """
+        if self.SUPABASE_JWKS_URL:
+            return self.SUPABASE_JWKS_URL
+        return f"{self.SUPABASE_URL.rstrip('/')}/auth/v1/.well-known/jwks.json"
+
+    @property
+    def issuer(self) -> str:
+        """
+        Returns the effective expected 'iss' claim: `SUPABASE_ISSUER` if
+        explicitly set, otherwise derived from `SUPABASE_URL` using
+        Supabase's standard convention: '{SUPABASE_URL}/auth/v1' (no
+        trailing slash, no '/.well-known/...' suffix — this is the exact
+        string Supabase places in the 'iss' claim of every issued JWT).
+        """
+        if self.SUPABASE_ISSUER:
+            return self.SUPABASE_ISSUER
+        return f"{self.SUPABASE_URL.rstrip('/')}/auth/v1"
 
 
 @lru_cache
