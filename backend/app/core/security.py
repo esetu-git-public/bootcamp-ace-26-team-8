@@ -3,18 +3,6 @@ security.py
 
 Authentication and authorization verification for the Loan Default
 Prediction System backend.
-
-Responsibilities (per project blueprint, Section 5 — Backend Module and
-Section 2.6 — Authentication Flow):
-    - Verify the Supabase-issued JWT signature and expiry on every protected
-      route.
-    - Extract the authenticated user's `user_id` and `role` claims.
-    - Provide FastAPI dependencies for role-based access control so that
-      customer-only routes reject officer tokens and vice versa, returning
-      403 on mismatch, and 401 on invalid/expired/missing tokens.
-
-This module never trusts client-supplied role data; the role claim is
-always read from the verified JWT payload issued by Supabase Auth.
 """
 
 from __future__ import annotations
@@ -22,9 +10,10 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Optional
 
+import jwt
+from jwt import PyJWKClient
 from fastapi import Depends, HTTPException, status
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
-from jose import ExpiredSignatureError, JWTError, jwt
 
 from app.core.config import get_settings
 from app.core.logging import get_logger
@@ -32,12 +21,15 @@ from app.core.logging import get_logger
 logger = get_logger(__name__)
 settings = get_settings()
 
+# Use the derived JWKS URL from config.py
+_jwk_client = PyJWKClient(settings.jwks_url)
+
 _bearer_scheme = HTTPBearer(auto_error=False)
 
 
 @dataclass(frozen=True)
 class AuthenticatedUser:
-    """Represents the authenticated principal extracted from a verified JWT."""
+    """Represents the authenticated user."""
 
     user_id: str
     role: str
@@ -45,9 +37,9 @@ class AuthenticatedUser:
 
 
 class AuthenticationError(HTTPException):
-    """Raised when a token is missing, malformed, expired, or invalid."""
+    """Raised when a token is missing or invalid."""
 
-    def __init__(self, detail: str = "Invalid or expired authentication token") -> None:
+    def __init__(self, detail: str = "Invalid or expired authentication token"):
         super().__init__(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail=detail,
@@ -56,116 +48,113 @@ class AuthenticationError(HTTPException):
 
 
 class AuthorizationError(HTTPException):
-    """Raised when an authenticated user's role does not permit an action."""
+    """Raised when the user doesn't have the required role."""
 
-    def __init__(self, detail: str = "You do not have permission to perform this action") -> None:
-        super().__init__(status_code=status.HTTP_403_FORBIDDEN, detail=detail)
-
-
-def _decode_supabase_jwt(token: str) -> dict:
-    """
-    Decodes and verifies a Supabase Auth JWT using the configured secret.
-
-    Raises
-    ------
-    AuthenticationError
-        If the token is expired, malformed, or fails signature verification.
-    """
-    if not settings.SUPABASE_JWT_SECRET:
-        logger.error("SUPABASE_JWT_SECRET is not configured; cannot verify tokens")
-        raise AuthenticationError("Authentication is not properly configured")
-
-    try:
-        payload = jwt.decode(
-            token,
-            settings.SUPABASE_JWT_SECRET,
-            algorithms=[settings.JWT_ALGORITHM],
-            audience=settings.ACCESS_TOKEN_AUDIENCE,
-            options={"verify_aud": True},
+    def __init__(self, detail: str = "Permission denied"):
+        super().__init__(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail=detail,
         )
-    except ExpiredSignatureError as exc:
-        logger.info("Rejected expired JWT")
-        raise AuthenticationError("Authentication token has expired") from exc
-    except JWTError as exc:
-        logger.info("Rejected invalid JWT: %s", exc)
-        raise AuthenticationError("Authentication token is invalid") from exc
-
-    return payload
 
 
 def _extract_user(payload: dict) -> AuthenticatedUser:
     """
-    Extracts `user_id` and `role` from a verified Supabase JWT payload.
-
-    Supabase stores custom claims (such as `role`) under `user_metadata` or
-    `app_metadata` depending on project configuration; both locations are
-    checked, falling back to `customer` only if genuinely absent so that a
-    missing role fails closed rather than silently granting privilege.
+    Extract user information from JWT payload.
     """
+
     user_id = payload.get("sub")
+
     if not user_id:
-        raise AuthenticationError("Token is missing a subject (user id) claim")
+        raise AuthenticationError("Token is missing subject (sub) claim")
 
     app_metadata = payload.get("app_metadata") or {}
     user_metadata = payload.get("user_metadata") or {}
 
-    role = (
-        payload.get("role")
-        or app_metadata.get("role")
-        or user_metadata.get("role")
-    )
+    role = app_metadata.get("role")
 
-    if not role or role not in {"customer", "officer"}:
-        logger.warning("Authenticated user %s has no valid role claim", user_id)
-        raise AuthorizationError("Account has no valid role assigned")
+    if role not in {"customer", "officer"}:
+        role = user_metadata.get("role")
+
+    if role not in {"customer", "officer"}:
+        role = payload.get("role")
+
+    if role not in {"customer", "officer"}:
+        logger.warning(
+            "Authenticated user %s has no valid role.",
+            user_id,
+        )
+        raise AuthorizationError("Account has no valid role assigned.")
 
     email = payload.get("email")
 
-    return AuthenticatedUser(user_id=user_id, role=role, email=email)
+    return AuthenticatedUser(
+        user_id=user_id,
+        role=role,
+        email=email,
+    )
 
 
 async def get_current_user(
     credentials: Optional[HTTPAuthorizationCredentials] = Depends(_bearer_scheme),
 ) -> AuthenticatedUser:
     """
-    FastAPI dependency that verifies the bearer token on a protected route
-    and returns the authenticated user's id, role, and email.
-
-    Use this dependency on any route that merely requires a valid session,
-    regardless of role.
+    Verify Supabase JWT and return authenticated user.
     """
-    if credentials is None or not credentials.credentials:
-        raise AuthenticationError("Missing authentication token")
 
-    payload = _decode_supabase_jwt(credentials.credentials)
+    if credentials is None or credentials.scheme.lower() != "bearer":
+        raise AuthenticationError("Missing bearer token")
+
+    token = credentials.credentials
+
+    try:
+        # Fetch signing key from Supabase JWKS
+        signing_key = _jwk_client.get_signing_key_from_jwt(token).key
+
+        payload = jwt.decode(
+            token,
+            signing_key,
+            algorithms=settings.allowed_algorithms_list,
+            audience=settings.ACCESS_TOKEN_AUDIENCE,
+            issuer=settings.issuer,
+        )
+
+    except jwt.ExpiredSignatureError:
+        raise AuthenticationError("Token has expired")
+
+    except jwt.InvalidAudienceError:
+        raise AuthenticationError("Invalid token audience")
+
+    except jwt.InvalidIssuerError:
+        raise AuthenticationError("Invalid token issuer")
+
+    except jwt.InvalidTokenError as e:
+        logger.exception("JWT validation failed")
+        raise AuthenticationError(str(e))
+
     return _extract_user(payload)
 
 
 def require_role(*allowed_roles: str):
     """
-    Dependency factory enforcing that the authenticated user's role is one
-    of `allowed_roles`. Returns 403 on mismatch, 401 on invalid/missing
-    tokens (via `get_current_user`).
-
-    Usage:
-        @router.get("/officer/applications")
-        async def list_applications(user: AuthenticatedUser = Depends(require_role("officer"))):
-            ...
+    Restrict endpoint access to specific roles.
     """
 
     async def _dependency(
         current_user: AuthenticatedUser = Depends(get_current_user),
     ) -> AuthenticatedUser:
+
         if current_user.role not in allowed_roles:
             logger.info(
-                "Role mismatch: user %s has role '%s', requires one of %s",
+                "Role mismatch: user=%s role=%s expected=%s",
                 current_user.user_id,
                 current_user.role,
                 allowed_roles,
             )
+
             raise AuthorizationError(
                 f"This action requires role(s): {', '.join(allowed_roles)}"
             )
+
         return current_user
 
     return _dependency
