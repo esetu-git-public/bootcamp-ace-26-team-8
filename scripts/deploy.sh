@@ -1,22 +1,33 @@
 #!/bin/bash
 
 echo "======================================"
-echo Deploy Preparation
+echo "Deploy Preparation"
 echo "======================================"
-
-echo "Installing Backend Dependencies..."
 
 cd ../backend || exit
 
+if [ ! -d "venv" ]; then
+    echo ""
+    echo "Backend virtual environment not found."
+    echo ""
+    echo "Run:"
+    echo "python3 -m venv venv"
+    echo "source venv/bin/activate"
+    echo "pip install -r requirements.txt"
+    exit 1
+fi
+
 source venv/bin/activate
+
+echo "Installing Backend Dependencies..."
 
 pip install -r requirements.txt
 
 echo ""
 
-echo "Installing Frontend Dependencies..."
-
 cd ../frontend || exit
+
+echo "Installing Frontend Dependencies..."
 
 npm install
 
