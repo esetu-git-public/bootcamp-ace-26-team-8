@@ -5,7 +5,7 @@ echo Starting Loan Default Prediction System
 echo ======================================
 
 echo Starting Backend...
-start cmd /k "cd /d ..\backend && .venv\Scripts\activate && uvicorn app.main:app --reload"
+start cmd /k "cd /d ..\backend && venv\Scripts\activate && uvicorn app.main:app --reload"
 
 timeout /t 3 > nul
 

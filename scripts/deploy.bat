@@ -8,7 +8,7 @@ echo Installing Backend Dependencies...
 
 cd ..\backend
 
-call .venv\Scripts\activate
+call venv\Scripts\activate
 
 pip install -r requirements.txt
 
