@@ -5,7 +5,7 @@ echo "Starting Loan Default Prediction System"
 echo "======================================"
 
 cd ../backend || exit
-source .venv/bin/activate
+source venv/bin/activate
 uvicorn app.main:app --reload &
 BACKEND_PID=$!
 
